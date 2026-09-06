@@ -25,7 +25,7 @@
         <script type="module" src="{{ $base }}/build/{{ $js }}"></script>
     @endif
 </head>
-<body class="bg-slate-950 text-white antialiased">
+<body class="bg-red-600 text-white antialiased" style="background:red !important">
     <nav class="fixed top-0 left-0 right-0 z-50 px-4 md:px-10 py-5 flex items-center justify-between bg-gradient-to-b from-slate-900/80 to-slate-900/40 backdrop-blur-2xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
         <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
             <div class="relative">

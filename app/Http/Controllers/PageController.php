@@ -39,10 +39,10 @@ class PageController extends Controller
 
     public function admin($secret = null)
     {
-        $expected = trim(env('ADMIN_SECRET'), '/');
+        $expected = trim((string) config('app.admin_secret'), '/');
         $given = trim((string) $secret, '/');
 
-        if (!$given || $given !== $expected) {
+        if (!$expected || !$given || $given !== $expected) {
             abort(404);
         }
 
@@ -58,18 +58,19 @@ class PageController extends Controller
     public function contactStore(Request $request)
     {
         $data = $request->validate([
-            'service' => 'required|string|max:255',
+            'service' => 'nullable|string|max:255',
             'details' => 'nullable|json',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:50',
             'company' => 'nullable|string|max:255',
             'preference' => 'nullable|string|max:50',
             'message' => 'nullable|string|max:5000',
         ]);
 
+        $data['service'] = $data['service'] ?: 'Homepage contact';
         $data['message'] = $data['message'] ?? '';
-        $data['details'] = $data['details'] ? json_decode($data['details'], true) : null;
+        $data['details'] = !empty($data['details']) ? json_decode($data['details'], true) : null;
 
         ContactMessage::create($data);
 

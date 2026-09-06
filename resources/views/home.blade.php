@@ -205,8 +205,22 @@
                 <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> {{ __('Geen verplichtingen') }}</span>
             </div>
 
+            @if (session('success'))
+                <div class="max-w-lg mx-auto mb-8 p-6 bg-white/5 rounded-2xl border border-white/10 text-center">
+                    <p class="text-sm leading-relaxed">{{ session('success') }}</p>
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="max-w-lg mx-auto mb-8 p-6 bg-red-500/10 rounded-2xl border border-red-500/20">
+                    @foreach ($errors->all() as $error)
+                        <p class="text-xs text-red-300">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
+
             <form action="{{ route('contact.store') }}" method="POST" class="max-w-lg mx-auto">
                 @csrf
+                <input type="hidden" name="service" value="Homepage contact">
                 <div class="mb-4">
                     <input type="text" name="name" placeholder="{{ __('Uw naam') }}" required class="w-full bg-transparent border-b border-white/20 py-3 text-sm outline-none focus:border-blue-400/60 transition-colors placeholder:opacity-30">
                 </div>
